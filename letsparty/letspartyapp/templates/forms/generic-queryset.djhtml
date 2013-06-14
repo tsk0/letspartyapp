@@ -1,0 +1,22 @@
+<h1>{{ header.title }}</h1>
+<table>
+{% for query in queryset %}
+	<tr>
+    	<td>{{ query }}</td>
+    	<form  method="post" action="" id="query" >
+		{% csrf_token %}
+		{{ queryset.management_form }}
+			<fieldset>
+       			<td>  
+       				<input hidden name="festa" value= {{ query.id }}>
+					<button type="button" action="modifica-festa-{{ query.id }}">Modifica</button>
+				</td>
+				<td>
+					<input hidden name="festa" value={{ query.id }}>
+					<button type="button" action="elimina-festa-{{ query.id }}">Elimina</button>
+				</td>
+			</fieldset>
+		</form>
+    </tr>
+{% endfor %}
+</table>
