@@ -1,17 +1,21 @@
 <h1>{{ header.title }}</h1>
 <table>
-{% for query in queryset %}
+{% for record in queryset %}
 	<tr>
-    	<td>{{ query }}</td>
-    	<form  method="post" action="" id="{{ queryname }}-id-{{ query.id }}" >
+    	<td>{{ record }}</td>
+    	<form  method="post" action="" id="{{ record._meta.object_name }}-form-{{ record.id }}" >
 		{% csrf_token %}
 			<fieldset>
-				<input hidden name="{{ queryname }}" value={{ query.id }}>
+				<input hidden name="{{ recordname }}" value={{ record.id }}>
        			<td>  
-					<button type="button" action="/letsparty/modifica-{{ queryname }}">Modifica</button>
+					<button type="submit" action="/letsparty/modifica" form="{{ record._meta.object_name }}-form-{{ record.id }}">
+					   Modifica
+					</button>
 				</td>
 				<td>
-					<button type="button" action="/letsparty/elimina-{{ queryname }}">Elimina</button>
+					<button type="submit" action="/letsparty/elimina" form="{{ record._meta.object_name }}-form-{{ record.id }}">
+					   Elimina
+					</button>
 				</td>
 			</fieldset>
 		</form>
