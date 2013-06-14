@@ -3,17 +3,15 @@
 {% for query in queryset %}
 	<tr>
     	<td>{{ query }}</td>
-    	<form  method="post" action="" id="query" >
+    	<form  method="post" action="" id="{{ queryname }}-id-{{ query.id }}" >
 		{% csrf_token %}
-		{{ queryset.management_form }}
 			<fieldset>
+				<input hidden name="{{ queryname }}" value={{ query.id }}>
        			<td>  
-       				<input hidden name="festa" value= {{ query.id }}>
-					<button type="button" action="modifica-festa-{{ query.id }}">Modifica</button>
+					<button type="button" action="/letsparty/modifica-{{ queryname }}">Modifica</button>
 				</td>
 				<td>
-					<input hidden name="festa" value={{ query.id }}>
-					<button type="button" action="elimina-festa-{{ query.id }}">Elimina</button>
+					<button type="button" action="/letsparty/elimina-{{ queryname }}">Elimina</button>
 				</td>
 			</fieldset>
 		</form>
