@@ -55,10 +55,17 @@ def go_home(request, template_path='letsparty/', ctx={}):
 	"""
 	context = {}
 	context.update(ctx)
-	context['user'] = logged_user()
-	log = models.Login.objects.latest('data_accesso')
-	qset = models.Amministratore.objects.get(id=log.amministratore.id).festa_set.select_related()
-	context['formset'] = modelformset_factory(models.Festa, exclude=('inventario', 'partecipazioni'), extra=0)(queryset=qset)
+	user = logged_user()
+	if not user:
+		qset = []
+		context['user'] = "anonym"
+	else:
+		context['user'] = user
+	# 	log = models.Login.objects.latest('data_accesso')
+	# 	qset = models.Amministratore.objects.get(id=log.amministratore.id).festa_set.select_related()
+		qset = user.festa_set.select_related()
+# 	context['queryset'] = modelformset_factory(models.Festa, exclude=('inventario', 'partecipazioni'), extra=0)(queryset=qset)
+	context['queryset'] = qset
 	return render(request, template_path, context )
 	
 def displayTable(request, table, template_path='letsparty/', ctx={}):
